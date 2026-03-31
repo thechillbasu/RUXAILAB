@@ -4,12 +4,14 @@ import Study from '../models/Study'
 import CardSortingStudy from '@/ux/CardSorting/models/CardSortingStudy'
 import ManualAccessibilityTest from '@/ux/accessibility/models/ManualAccessibilityTest'
 import AutomaticAccessibilityTest from '@/ux/accessibility/models/AutomaticAccessibilityTest'
+import CWStudy from '@/ux/CognitiveWalkthrough/models/CWStudy'
 import Cooperators from '../models/Cooperators'
 import StudyAdmin from '@/shared/models/StudyAdmin'
 import StudyAnswer from '../models/StudyAnswer'
 import UserStudyAnswer from '@/ux/UserTest/models/UserStudyAnswer'
 import HeuristicStudyAnswer from '@/ux/Heuristic/models/HeuristicStudyAnswer'
 import CardSortingStudyAnswer from '@/ux/CardSorting/models/CardSortingStudyAnswer'
+import CWStudyAnswer from '@/ux/CognitiveWalkthrough/models/CWStudyAnswer'
 
 /**
  * Factory function to instantiate the correct study model based on type.
@@ -41,6 +43,8 @@ export function instantiateStudyByType(type, rawData) {
       return new ManualAccessibilityTest(normalizedData)
     case STUDY_TYPES.ACCESSIBILITY_AUTOMATIC:
       return new AutomaticAccessibilityTest(normalizedData)
+    case STUDY_TYPES.COGNITIVE_WALKTHROUGH:
+      return new CWStudy(normalizedData)
     default:
       return new Study(normalizedData)
   }
@@ -61,6 +65,8 @@ export function instantiateStudyAnswerByType(type, rawData) {
       return new HeuristicStudyAnswer(rawData)
     case STUDY_TYPES.CARD_SORTING:
       return new CardSortingStudyAnswer(rawData)
+    case STUDY_TYPES.COGNITIVE_WALKTHROUGH:
+      return new CWStudyAnswer(rawData)
     default:
       return new StudyAnswer(rawData)
   }
@@ -73,6 +79,7 @@ export const STUDY_TYPES = {
   USER: 'USER',
   HEURISTIC: 'HEURISTIC',
   CARD_SORTING: 'CARD_SORTING',
+  COGNITIVE_WALKTHROUGH: 'COGNITIVE_WALKTHROUGH',
   ACCESSIBILITY_MANUAL: 'MANUAL',
   ACCESSIBILITY_AUTOMATIC: 'AUTOMATIC',
 }
@@ -261,7 +268,7 @@ export const METHOD_DEFINITIONS = {
     color: '#795548',
     description: 'Step-by-step evaluation of cognitive tasks',
     category: METHOD_CATEGORIES.inspection.id,
-    status: METHOD_STATUSES.NOT_AVAILABLE.id,
+    status: METHOD_STATUSES.AVAILABLE.id,
   },
   ACCESSIBILITY_MANUAL: {
     id: 'ACCESSIBILITY_MANUAL',
@@ -314,6 +321,8 @@ export const getMethodDefinition = (testType, subType = '') => {
     }
     case STUDY_TYPES.HEURISTIC:
       return METHOD_DEFINITIONS.HEURISTICS
+    case STUDY_TYPES.COGNITIVE_WALKTHROUGH:
+      return METHOD_DEFINITIONS.COGNITIVE_WALKTHROUGH
     case STUDY_TYPES.CARD_SORTING:
       return METHOD_DEFINITIONS.CARD_SORTING
     default:
@@ -325,6 +334,8 @@ export const getMethodManagerView = (type, subType) => {
   const normalizedType = normalizeStudyType(type)
 
   if (normalizedType === STUDY_TYPES.HEURISTIC) return 'HeuristicManagerView'
+  else if (normalizedType === STUDY_TYPES.COGNITIVE_WALKTHROUGH)
+    return 'CWManagerView'
   else if (normalizedType === STUDY_TYPES.CARD_SORTING)
     return 'CardSortingManagerView'
   else if (normalizedType === STUDY_TYPES.USER) {

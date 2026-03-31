@@ -4,6 +4,7 @@ import Admin from '@/router/modules/admin.js'
 import SuperAdmin from '@/router/modules/superAdmin.js'
 import CardSorting from '@/ux/CardSorting/router.js'
 import HeuristicRoutes from '@/ux/Heuristic/router.js'
+import CWRoutes from '@/ux/CognitiveWalkthrough/router.js'
 import accessibilityRoutes from '@/ux/accessibility/router.js'
 import UserTestRoutes from '@/ux/UserTest/router.js'
 import store from '@/store'
@@ -15,6 +16,7 @@ const routes = [
   ...CardSorting,
   ...accessibilityRoutes,
   ...HeuristicRoutes,
+  ...CWRoutes,
   ...UserTestRoutes,
 ]
 

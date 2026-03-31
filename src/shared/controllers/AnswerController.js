@@ -68,6 +68,10 @@ export default class AnswerController extends Controller {
         fieldToUpdate[`taskAnswers.${payload.userDocId}`] =
           payload.toFirestore()
       }
+    } else if (testType === STUDY_TYPES.COGNITIVE_WALKTHROUGH) {
+      const key = payload.userDocId || `Ev${Date.now()}`
+      fieldToUpdate[`cwAnswers.${key}`] =
+        typeof payload.toFirestore === 'function' ? payload.toFirestore() : payload
     }
     await super.update(COLLECTION, answersDocId, fieldToUpdate)
   }

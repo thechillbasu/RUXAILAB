@@ -214,6 +214,14 @@ async function loadAnswers() {
           answers,
           submitted,
         })
+      } else if (answerDoc.type === STUDY_TYPES.COGNITIVE_WALKTHROUGH) {
+        const answers = Object.values(answerDoc.cwAnswers || {})
+        const submitted = answers.some((a) => a.submitted === true)
+        last4.push({
+          ...testDoc,
+          answers,
+          submitted,
+        })
       } else {
         const answers = Object.values(answerDoc.heuristicAnswers || {})
         const submitted = answers.some((a) => a.submitted === true)

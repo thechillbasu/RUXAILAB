@@ -22,7 +22,7 @@
             class="ml-4"
           >
             <v-tab @click="setTab(0)">
-              {{ $t('HeuristicsTestAnswer.titles.statistics') }}
+              Statistics
             </v-tab>
             <v-tab @click="setTab(1)">
               {{ $t('HeuristicsTestAnswer.titles.evaluators') }}
@@ -36,13 +36,21 @@
           </v-tabs>
         </template>
 
-        <!-- Main Tabs Content -->
-        <template #content>
+          <template #content>
           <div class="ma-0 pa-0">
-            <!-- Tab 1 - Statistics -->
-            <StatisticsSummaryCard v-if="tab == 0" :result="showFinalResult" />
+            <!-- Tab 0 - Statistics (formerly Overview) -->
+            <OverviewDashboard
+              v-if="tab == 0"
+              :result="showFinalResult"
+              :issues="heuristicIssues"
+              :heuristic-scores="heuristicScores"
+              :evaluator-count="evaluatorCount"
+              :heuristic-count="heuristicCount"
+              :answer-doc="testAnswerDocument"
+              @go-to-issues="setTab(3)"
+            />
 
-            <!-- Tab 2 - Evaluators -->
+            <!-- Tab 1 - Evaluators -->
             <EvaluatorsAndGraphicsCard
               v-if="tab == 1"
               :statistics="evaluatorStatistics"
@@ -50,7 +58,7 @@
               @download-csv="DownloadEvaluatorCsv"
             />
 
-            <!-- Tab 3 - Heuristics -->
+            <!-- Tab 2 - Heuristics -->
             <HeuristicsDataCard
               v-if="tab == 2"
               :has-enough-data="evaluatorStatistics.items.length > 1"
@@ -64,7 +72,7 @@
               :max-value="maxValue"
               @go-to-heuristic="goToDataHeuristic"
             />
-            <!-- Tab 4 - Analytics -->
+            <!-- Tab 3 - Analytics -->
             <HeuristicsAnalytics v-if="tab == 3" />
           </div>
         </template>
@@ -87,6 +95,8 @@ import HeuristicsAnalytics from '@/ux/Heuristic/components/HeuristicsAnalytics.v
 import StatisticsSummaryCard from '@/ux/Heuristic/components/statistics/StatisticsSummaryCard.vue'
 import EvaluatorsAndGraphicsCard from '@/ux/Heuristic/components/statistics/EvaluatorsAndGraphicsCard.vue'
 import HeuristicsDataCard from '@/ux/Heuristic/components/statistics/HeuristicsDataCard.vue'
+import OverviewDashboard from '@/ux/Heuristic/components/statistics/OverviewDashboard.vue'
+import { toIssues } from '@/ux/Heuristic/utils/heuristicResultsAdapter'
 
 import axios from 'axios'
 import {
@@ -126,6 +136,37 @@ const loading = ref(false) // Note: Check if Vuex getter 'loading' is needed
 const array_scores = ref([])
 
 const showFinalResult = computed(() => finalResult())
+
+const heuristicIssues = computed(() => {
+  return toIssues(testAnswerDocument.value, test.value)
+})
+
+const heuristicScores = computed(() => {
+  const stats = heuristicsStatistics.value
+  if (!stats?.items) return []
+  return stats.items.map((item) => {
+    const pct = parseFloat(item.percentage) || 0
+    let severity = 'pass'
+    if (pct < 25) severity = 'critical'
+    else if (pct < 50) severity = 'high'
+    else if (pct < 75) severity = 'medium'
+    else if (pct < 90) severity = 'low'
+    return {
+      name: item.name || 'Unknown',
+      percentage: pct.toFixed(1),
+      severity,
+    }
+  })
+})
+
+const evaluatorCount = computed(() => {
+  const stats = evaluatorStatistics.value
+  return stats?.items?.length || 0
+})
+
+const heuristicCount = computed(() => {
+  return test.value?.testStructure?.length || 0
+})
 
 const evaluatorStatistics = computed(
   () => store.state.Answer.evaluatorStatistics || { header: [], items: [] },
@@ -271,8 +312,10 @@ const heuristicsStatistics = computed(() => {
           .toFixed(2)
       : '0.00'
     const convertedValue =
-      item.max && item.min && item.max !== item.min
-        ? ((valueToConvert - item.min) / (item.max - item.min)) * 100
+      item.max && item.max !== 0
+        ? item.max !== item.min
+          ? ((valueToConvert - item.min) / (item.max - item.min)) * 100
+          : (valueToConvert / item.max) * 100
         : 0
     table.items.push({
       name: item.heuristic || 'Unknown',

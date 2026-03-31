@@ -3,6 +3,9 @@
     <div v-if="test.testType == STUDY_TYPES.HEURISTIC">
       <HeuristicTestView :id="id" :token="token" />
     </div>
+    <div v-if="test.testType == STUDY_TYPES.COGNITIVE_WALKTHROUGH">
+      <CWTestView :id="id" :token="token" />
+    </div>
     <div
       v-if="
         test.testType == STUDY_TYPES.USER &&
@@ -28,6 +31,7 @@ import { useStore } from 'vuex'
 import UserTestView from '@/ux/UserTest/views/UserTestView.vue'
 import ModeratedTestView from '../../ux/UserTest/views/ModeratedTestView.vue'
 import HeuristicTestView from '../../ux/Heuristic/views/HeuristicTestView.vue'
+import CWTestView from '../../ux/CognitiveWalkthrough/views/CWTestView.vue'
 import {
   STUDY_TYPES,
   USER_STUDY_SUBTYPES,
@@ -48,3 +52,4 @@ onBeforeMount(async () => {
   await store.dispatch('getCurrentTestAnswerDoc')
 })
 </script>
+

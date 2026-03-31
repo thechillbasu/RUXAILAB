@@ -1,0 +1,17 @@
+{
+  "id": "bertini8",
+  "name": "Bertini's 8 Mobile Heuristics",
+  "author": "Enrico Bertini et al.",
+  "year": 2006,
+  "description": "Adapted heuristics for mobile interface evaluation, accounting for small screens, touch interaction, and environmental interruption.",
+  "heuristics": [
+    { "id": "M1", "title": "Visibility of System Status and Losability/Findability", "description": "Provide clear, persistent feedback on system state. Users should always know where they are and be able to find key functions easily despite limited screen space." },
+    { "id": "M2", "title": "Match Between System and Real World", "description": "Use mobile-native metaphors and gestures that match real-world expectations. Leverage device capabilities (location, camera, motion) naturally." },
+    { "id": "M3", "title": "Consistency and Mapping", "description": "Maintain consistency with platform conventions (iOS HIG, Material Design). Map physical interactions (swipe, pinch) to logical outcomes predictably." },
+    { "id": "M4", "title": "Good Ergonomics and Minimalist Design", "description": "Design for thumb-accessible touch targets (min 44px). Minimize clutter and cognitive load on small screens." },
+    { "id": "M5", "title": "Ease of Input, Screen Readability, and Glanceability", "description": "Minimize text input requirements. Ensure content is readable in various lighting conditions and glanceable for quick information retrieval." },
+    { "id": "M6", "title": "Flexibility, Efficiency of Use, and Personalization", "description": "Support multiple input methods and shortcuts. Allow personalization of frequently used features and adaptive interfaces." },
+    { "id": "M7", "title": "Aesthetic, Privacy, and Social Conventions", "description": "Respect privacy norms in public usage contexts. Design for social acceptability and discrete interaction when needed." },
+    { "id": "M8", "title": "Realistic Error Management", "description": "Handle connectivity loss, interruptions, and battery constraints gracefully. Auto-save state and support recovery from disruptions." }
+  ]
+}

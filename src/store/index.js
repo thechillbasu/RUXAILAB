@@ -7,6 +7,7 @@ import Storage from '@/store/modules/Storage'
 import Users from '@/features/super/store/User'
 import Reports from '@/shared/store/Report'
 import Heuristic from '@/ux/Heuristic/store/Heuristic'
+import CognitiveWalkthrough from '@/ux/CognitiveWalkthrough/store/CognitiveWalkthrough'
 import Answer from '@/shared/store/Answer'
 import Language from '../features/language/store/Language'
 import Assessment from '../ux/accessibility/store/Assessment'
@@ -86,6 +87,7 @@ export default createStore({
     Users,
     Reports,
     Heuristic,
+    CognitiveWalkthrough,
     Answer,
     Language,
     automaticReport,

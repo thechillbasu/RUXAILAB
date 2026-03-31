@@ -130,8 +130,7 @@ const methodsByCategory = {
         'studyCreation.methods.inspection.cognitive_walkthrough.description',
       icon: 'mdi-walk',
       color: 'info',
-      available: false,
-      comingSoon: true,
+      available: true,
     },
   ],
   accessibility: [

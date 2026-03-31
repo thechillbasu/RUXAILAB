@@ -512,6 +512,13 @@ const getReportTotalTime = (reportData, type) => {
     return formatTimeSpentFromMs(totalMs)
   }
 
+  if (type === STUDY_TYPES.COGNITIVE_WALKTHROUGH) {
+    // Cognitive Walkthrough typically stores totalTime in seconds on the root
+    if (reportData.totalTime !== undefined) {
+      return formatTimeSpentFromMs(reportData.totalTime * 1000)
+    }
+  }
+
   const tasks = reportData.tasks || {}
   const list = Array.isArray(tasks) ? tasks : Object.values(tasks)
   const totalMs = list.reduce(
@@ -525,10 +532,11 @@ const reports = computed(() => {
   const doc = answers.value
   if (!doc) return []
   const type = doc.type
-  const raw =
-    type === STUDY_TYPES.USER
-      ? doc.taskAnswers || {}
-      : doc.heuristicAnswers || {}
+  let raw = {}
+  if (type === STUDY_TYPES.USER) raw = doc.taskAnswers || {}
+  else if (type === STUDY_TYPES.HEURISTIC) raw = doc.heuristicAnswers || {}
+  else if (type === STUDY_TYPES.COGNITIVE_WALKTHROUGH) raw = doc.cwAnswers || {}
+  
   return Object.values(raw).map((r) => ({
     id: r.userDocId,
     fullName: r.fullName || t('HeuristicsReport.headers.evaluator'),

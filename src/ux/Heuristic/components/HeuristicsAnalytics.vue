@@ -6,7 +6,26 @@
       <template #content>
         <div class="ma-0 pa-0">
           <v-card flat rounded="xl" style="background: #f5f7ff">
-            <v-row v-if="resultHeuristics" class="ma-0 pa-0">
+            <!-- Top-level view tabs -->
+            <v-tabs v-model="viewTab" color="#fca326" class="px-4 pt-2" density="comfortable">
+              <v-tab value="drilldown">
+                <v-icon start>mdi-table-search</v-icon>
+                Drill-Down
+              </v-tab>
+              <v-tab value="issues">
+                <v-icon start>mdi-alert-decagram-outline</v-icon>
+                Issues Overview
+              </v-tab>
+            </v-tabs>
+            <v-divider />
+
+            <!-- Issues Tab -->
+            <div v-if="viewTab === 'issues'" class="pa-4">
+              <IssueTable :issues="heuristicIssues" />
+            </div>
+
+            <!-- Existing Drill-Down Tab -->
+            <v-row v-if="viewTab === 'drilldown' && resultHeuristics" class="ma-0 pa-0">
               <!--Heuristics List-->
               <v-col class="ma-0 pa-0" cols="2">
                 <v-list border rounded density="compact" height="560px">
@@ -293,6 +312,8 @@ import { useRoute } from 'vue-router'
 import ShowInfo from '@/shared/components/ShowInfo.vue'
 import BarChart from '@/ux/Heuristic/components/charts/BarChart.vue'
 import IntroAnalytics from '@/shared/components/introduction_cards/IntroAnalytics.vue'
+import IssueTable from '@/shared/components/IssueTable.vue'
+import { toIssues } from '@/ux/Heuristic/utils/heuristicResultsAdapter'
 
 const store = useStore()
 const route = useRoute()
@@ -305,6 +326,12 @@ const resultHeuristics = ref([])
 const heuristicSelect = ref(null)
 const questionSelect = ref(null)
 const intro = ref(null)
+const viewTab = ref('drilldown')
+
+const heuristicIssues = computed(() => {
+  const answerDoc = store.state.Answer.testAnswerDocument
+  return toIssues(answerDoc, test.value)
+})
 
 const test = computed(() => store.getters.test)
 

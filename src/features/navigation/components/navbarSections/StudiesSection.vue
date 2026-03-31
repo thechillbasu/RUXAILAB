@@ -302,6 +302,8 @@ const filteredTests = computed(() => {
         (method === METHOD_DEFINITIONS.USER_MODERATED.id &&
           testType === STUDY_TYPES.USER &&
           subType === USER_STUDY_SUBTYPES.MODERATED) ||
+        (method === METHOD_DEFINITIONS.COGNITIVE_WALKTHROUGH.id &&
+          testType === STUDY_TYPES.COGNITIVE_WALKTHROUGH) ||
         (method === 'MANUAL' && testType === 'MANUAL') ||
         (method === 'AUTOMATIC' && testType === 'AUTOMATIC')
     }

@@ -37,15 +37,11 @@
           class="elevation-0 cardStyle mx-2 mt-3 mb-6"
         >
           <template #item.result="{ item }">
-            <v-chip
-              v-if="isNaN(item.result)"
-              :color="getColorPorcentage(item.result)"
-            >
-              0.0%
-            </v-chip>
-            <v-chip v-else :color="getColorPorcentage(item.result)">
-              {{ item.result }}%
-            </v-chip>
+            <SeverityBadge
+              :severity="getSeverityFromPercent(item.result)"
+              :label="isNaN(item.result) ? '0.0%' : `${item.result}%`"
+              size="small"
+            />
           </template>
           <template #item.answered="{ item }"> {{ item.answered }}% </template>
         </v-data-table>
@@ -91,6 +87,7 @@
 <script setup>
 import { ref } from 'vue'
 import RadarChart from '@/shared/components/charts/RadarChart.vue'
+import SeverityBadge from '@/shared/components/SeverityBadge.vue'
 
 // Local ind — independent from parent's ind to avoid collision
 const localInd = ref(0)
@@ -109,11 +106,12 @@ const props = defineProps({
 
 const emit = defineEmits(['download-csv'])
 
-// Color helper — local copy to keep component self-contained
-const getColorPorcentage = (value) => {
-  if (isNaN(value) || value < 25) return 'red'
-  if (value < 50) return 'orange'
-  if (value < 75) return 'yellow'
-  return 'green'
+// Severity from percentage
+const getSeverityFromPercent = (value) => {
+  const v = Number(value) || 0
+  if (v < 25) return 'critical'
+  if (v < 50) return 'high'
+  if (v < 75) return 'medium'
+  return 'low'
 }
 </script>

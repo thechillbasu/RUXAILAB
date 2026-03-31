@@ -1,0 +1,19 @@
+{
+  "id": "nielsen10",
+  "name": "Nielsen's 10 Usability Heuristics",
+  "author": "Jakob Nielsen",
+  "year": 1994,
+  "description": "The most widely used heuristic set for general interface evaluation.",
+  "heuristics": [
+    { "id": "H1", "title": "Visibility of System Status", "description": "The design should always keep users informed about what is going on, through appropriate feedback within a reasonable amount of time." },
+    { "id": "H2", "title": "Match Between System and Real World", "description": "The design should speak the users' language. Use words, phrases, and concepts familiar to the user, rather than internal jargon." },
+    { "id": "H3", "title": "User Control and Freedom", "description": "Users often perform actions by mistake. They need a clearly marked 'emergency exit' to leave the unwanted action." },
+    { "id": "H4", "title": "Consistency and Standards", "description": "Users should not have to wonder whether different words, situations, or actions mean the same thing." },
+    { "id": "H5", "title": "Error Prevention", "description": "Good error messages are important, but the best designs carefully prevent problems from occurring in the first place." },
+    { "id": "H6", "title": "Recognition Rather Than Recall", "description": "Minimize the user's memory load by making elements, actions, and options visible." },
+    { "id": "H7", "title": "Flexibility and Efficiency of Use", "description": "Shortcuts — hidden from novice users — may speed up the interaction for the expert user." },
+    { "id": "H8", "title": "Aesthetic and Minimalist Design", "description": "Interfaces should not contain information which is irrelevant or rarely needed." },
+    { "id": "H9", "title": "Help Users Recognize, Diagnose, and Recover from Errors", "description": "Error messages should be expressed in plain language, precisely indicate the problem, and constructively suggest a solution." },
+    { "id": "H10", "title": "Help and Documentation", "description": "It's best if the system doesn't need any additional explanation. However, it may be necessary to provide documentation." }
+  ]
+}

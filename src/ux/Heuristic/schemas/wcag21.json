@@ -1,0 +1,19 @@
+{
+  "id": "wcag21",
+  "name": "WCAG 2.1 Accessibility Heuristics",
+  "author": "W3C WAI",
+  "year": 2018,
+  "description": "Accessibility-focused heuristics derived from WCAG 2.1 guidelines for evaluating inclusive interface design.",
+  "heuristics": [
+    { "id": "A1", "title": "Perceivable — Text Alternatives", "description": "All non-text content has a text alternative that serves the equivalent purpose. Images, icons, and media have descriptive alt text." },
+    { "id": "A2", "title": "Perceivable — Adaptable Content", "description": "Content can be presented in different ways without losing information or structure. Supports screen readers, zoom, and reflow." },
+    { "id": "A3", "title": "Perceivable — Distinguishable", "description": "Content is easy to see and hear. Sufficient color contrast (4.5:1 minimum), resizable text, and no reliance on color alone for meaning." },
+    { "id": "A4", "title": "Operable — Keyboard Accessible", "description": "All functionality is available from a keyboard. No keyboard traps exist, and focus order is logical." },
+    { "id": "A5", "title": "Operable — Enough Time", "description": "Users have enough time to read and use content. Time limits can be adjusted, paused, or extended." },
+    { "id": "A6", "title": "Operable — Navigable", "description": "Users can navigate, find content, and determine where they are. Skip navigation links, focus indicators, and clear headings are present." },
+    { "id": "A7", "title": "Understandable — Readable", "description": "Text content is readable and understandable. Language is identified, and jargon or abbreviations are explained." },
+    { "id": "A8", "title": "Understandable — Predictable", "description": "Pages appear and operate in predictable ways. Navigation is consistent, and components behave predictably." },
+    { "id": "A9", "title": "Understandable — Input Assistance", "description": "Users are helped to avoid and correct mistakes. Error identification, labels, and suggestions are provided." },
+    { "id": "A10", "title": "Robust — Compatible", "description": "Content is compatible with current and future tools, including assistive technologies. Valid HTML and ARIA roles are used correctly." }
+  ]
+}

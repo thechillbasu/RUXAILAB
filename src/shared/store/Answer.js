@@ -201,6 +201,15 @@ export default {
           value
       }
     },
+    SET_CW_ANSWER_LOCAL(state, { userId, data }) {
+      if (!state.testAnswerDocument) {
+        state.testAnswerDocument = { cwAnswers: {} }
+      }
+      if (!state.testAnswerDocument.cwAnswers) {
+        state.testAnswerDocument.cwAnswers = {}
+      }
+      state.testAnswerDocument.cwAnswers[userId] = data
+    },
     SET_TASK_MEDIA_URL(state, { taskIndex, mediaType, url, size, userId }) {
       const currentTaskMedia = state.mediaUrls[taskIndex] || {}
 
@@ -241,7 +250,7 @@ export default {
     },
   },
   actions: {
-    async getCurrentTestAnswerDoc({ commit, rootState }) {
+    async getCurrentTestAnswerDoc({ commit, state, rootState }) {
       const currentTest = rootState.Tests.Test
       if (!currentTest || !currentTest.answersDocId) {
         return
@@ -306,6 +315,11 @@ export default {
               state.testAnswerDocument.taskAnswers = {}
             }
             state.testAnswerDocument.taskAnswers[userId] = payload.data
+          } else if (payload.testType === STUDY_TYPES.COGNITIVE_WALKTHROUGH) {
+            if (!state.testAnswerDocument.cwAnswers) {
+              state.testAnswerDocument.cwAnswers = {}
+            }
+            state.testAnswerDocument.cwAnswers[userId] = payload.data
           }
         }
 
